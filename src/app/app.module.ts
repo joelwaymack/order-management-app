@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -20,6 +21,7 @@ import { OrderListComponent } from './components/order-list/order-list.component
 import { SettingsComponent } from './components/settings/settings.component';
 import { SettingsService } from './services/settings.service';
 import { CustomerEditorComponent } from './components/customer-editor/customer-editor.component';
+import { OrderEditorComponent } from './components/order-editor/order-editor.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,7 +38,8 @@ const routes: Routes = [
     CustomerListComponent,
     OrderListComponent,
     SettingsComponent,
-    CustomerEditorComponent
+    CustomerEditorComponent,
+    OrderEditorComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -49,7 +52,8 @@ const routes: Routes = [
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule
+    MatTableModule,
+    MatSelectModule
   ],
   providers: [
     SettingsService

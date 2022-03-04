@@ -19,5 +19,5 @@
         <mat-hint>The key for your Application Insights instance.</mat-hint>
     </mat-form-field>
 
-    <button mat-raised-button type="submit" color="primary" [disabled]="!settingsForm.valid">Save</button>
+    <button mat-raised-button type="submit" color="primary" [disabled]="!settingsForm.valid || !canSubmit()">Save</button>
 </form>

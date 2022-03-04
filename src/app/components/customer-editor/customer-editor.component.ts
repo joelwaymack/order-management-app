@@ -21,7 +21,6 @@ export class CustomerEditorComponent {
   private saving: boolean = false;
 
   @Input() set customer(value: Customer) {
-    this.saving = false;
     this.customerForm = this.fb.group({
       id: [value.id],
       name: [value.name, Validators.required]
@@ -51,6 +50,7 @@ export class CustomerEditorComponent {
 
     observable.subscribe(() => {
       this.closeEditor.emit(true);
+      this.saving = false;
     });
   }
 
