@@ -1,0 +1,11 @@
+<form [formGroup]="customerForm" (ngSubmit)="submit()">
+    <mat-form-field appearance="standard">
+        <mat-label>Customer Name</mat-label>
+        <input matInput placeholder="John Smith" formControlName="name">
+    </mat-form-field>
+
+    <div>
+        <button mat-raised-button type="submit" color="primary" [disabled]="!customerForm.valid || !canSubmit()">{{ action }}</button>
+        <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
+    </div>
+</form>

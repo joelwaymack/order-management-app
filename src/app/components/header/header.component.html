@@ -1,3 +1,9 @@
-<mat-toolbar>
-    <span>Order Management</span>
+<mat-toolbar color="primary">
+    <span class="title link" routerLink="/">Order Management</span>
+    <a *ngIf="showCustomerSection" mat-button class="link" routerLink="/customers">Customers</a>
+    <a *ngIf="showOrderSection" mat-button class="link" routerLink="/orders">Orders</a>
+    <span class="nav-spacer"></span>
+    <button mat-icon-button class="link" routerLink="/settings">
+        <mat-icon>settings</mat-icon>
+    </button>
 </mat-toolbar>

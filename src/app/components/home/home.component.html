@@ -1,1 +1,10 @@
-<p>home works!</p>
+<div class="sections">
+    <a *ngIf="showCustomersSection" class="section" mat-raised-button color="primary" routerLink="/customers">
+        <div><mat-icon>supervisor_account</mat-icon></div>
+        <div>Customers</div>
+    </a>
+    <a *ngIf="showOrdersSection" class="section" mat-raised-button color="primary" routerLink="orders">
+        <div><mat-icon>outbox</mat-icon></div>
+        <div>Orders</div>
+    </a>
+</div>

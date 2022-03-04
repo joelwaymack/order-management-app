@@ -1,0 +1,28 @@
+table {
+  width: 100%;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+.selected-customer {
+  font-weight: bold;
+}
+
+.title {
+  h1 {
+    margin-bottom: 0;
+    margin-right: 16px;
+  }
+
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}

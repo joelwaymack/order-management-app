@@ -1,0 +1,23 @@
+<h1>Settings</h1>
+
+<form [formGroup]="settingsForm" (ngSubmit)="submit()">
+    <mat-form-field appearance="standard">
+        <mat-label>Customer API URL</mat-label>
+        <input matInput placeholder="https://xyz.azurewebsites.net" formControlName="customerApiUrl">
+        <mat-hint>This is the base URL of your Azure App Service.</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+        <mat-label>Order API URL</mat-label>
+        <input matInput placeholder="https://xyz.azurewebsites.net" formControlName="orderApiUrl">
+        <mat-hint>This is the base URL of your Azure Function App.</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+        <mat-label>Application Insights Connection String</mat-label>
+        <input matInput placeholder="InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://region.in.applicationinsights.azure.com/" formControlName="appInsightsConnectionString">
+        <mat-hint>The key for your Application Insights instance.</mat-hint>
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" color="primary" [disabled]="!settingsForm.valid">Save</button>
+</form>
