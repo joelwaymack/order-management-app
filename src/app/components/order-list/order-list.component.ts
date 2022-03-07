@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subscription, interval } from 'rxjs';
-import { CustomerService } from 'src/app/services/customer.service';
+import { Observable, Subscription, interval } from 'rxjs';
 import { OrderService } from 'src/app/services/order.service';
-import { Customer, Order } from '../..//models';
+import { Order } from '../..//models';
 
 @Component({
   selector: 'app-order-list',
@@ -24,17 +23,12 @@ export class OrderListComponent implements OnInit {
     'paymentTimestamp',
     'shippedTimestamp'
   ];
-  public customers$: Observable<Customer[]>;
-  public selectedCustomer: Customer = { id: '0', name: 'All' };
 
   private refreshSubscription: Subscription;
 
-  constructor(private customerService: CustomerService, private orderService: OrderService) { }
+  constructor(private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.customers$ = this.customerService.getCustomers()
-      .pipe(map(customers => [this.selectedCustomer, ...customers]));
-
     this.refreshList();
 
     this.refreshSubscription = interval(1000)
@@ -46,10 +40,6 @@ export class OrderListComponent implements OnInit {
   }
 
   public refreshList(): void {
-    if (this.selectedCustomer && this.selectedCustomer.id !== '0') {
-      this.orders$ = this.orderService.getOrdersForCustomer(this.selectedCustomer.id);
-    } else {
-      this.orders$ = this.orderService.getOrders();
-    }
+    this.orders$ = this.orderService.getOrders();
   }
 }
