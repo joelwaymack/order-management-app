@@ -1,16 +1,6 @@
 <h1>Orders</h1>
 
-<mat-form-field appearance="fill">
-  <mat-label>Customer</mat-label>
-  <mat-select [(value)]="selectedCustomer">
-    <mat-option>All</mat-option>
-    <mat-option *ngFor="let customer of customers$ | async" [value]="customer">
-      {{customer.name}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-
-<app-order-editor [customer]="selectedCustomer" (closeEditor)="refreshList()"></app-order-editor>
+<app-order-editor (closeEditor)="refreshList()"></app-order-editor>
 
 <table mat-table [dataSource]="orders$">
     <ng-container matColumnDef="id">

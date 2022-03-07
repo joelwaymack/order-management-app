@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, interval } from 'rxjs';
 import { CustomerService } from 'src/app/services/customer.service';
 import { OrderService } from 'src/app/services/order.service';
 import { Customer, Order } from '../..//models';
@@ -11,7 +11,7 @@ import { Customer, Order } from '../..//models';
 })
 export class OrderListComponent implements OnInit {
 
-  public orders$: Observable<Order[]>;;
+  public orders$: Observable<Order[]>;
   public displayedColumns = [
     'id',
     'customerId',
@@ -25,15 +25,31 @@ export class OrderListComponent implements OnInit {
     'shippedTimestamp'
   ];
   public customers$: Observable<Customer[]>;
-  public selectedCustomer: Customer;
+  public selectedCustomer: Customer = { id: '0', name: 'All' };
+
+  private refreshSubscription: Subscription;
+
   constructor(private customerService: CustomerService, private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.customers$ = this.customerService.getCustomers();
-    this.orders$ = this.orderService.getOrders();
+    this.customers$ = this.customerService.getCustomers()
+      .pipe(map(customers => [this.selectedCustomer, ...customers]));
+
+    this.refreshList();
+
+    this.refreshSubscription = interval(1000)
+      .subscribe(() => this.refreshList());
   }
 
-  refreshList(): void {
-    this.orders$ = this.orderService.getOrders();
+  ngOnDestroy(): void {
+    this.refreshSubscription.unsubscribe();
+  }
+
+  public refreshList(): void {
+    if (this.selectedCustomer && this.selectedCustomer.id !== '0') {
+      this.orders$ = this.orderService.getOrdersForCustomer(this.selectedCustomer.id);
+    } else {
+      this.orders$ = this.orderService.getOrders();
+    }
   }
 }

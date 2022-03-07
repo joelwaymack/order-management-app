@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { Customer } from 'src/app/models';
+import { CustomerService } from 'src/app/services/customer.service';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
@@ -8,34 +10,40 @@ import { OrderService } from 'src/app/services/order.service';
   templateUrl: './order-editor.component.html',
   styleUrls: ['./order-editor.component.scss']
 })
-export class OrderEditorComponent {
+export class OrderEditorComponent implements OnInit {
   public orderForm: FormGroup;
-  private saving: boolean = false;
+  public customers$: Observable<Customer[]>;
+  public saving: boolean = false;
 
-  @Input() customer: Customer;
   @Output() closeEditor = new EventEmitter<void>();
 
-  constructor(private orderService: OrderService, private fb: FormBuilder) {
+  constructor(private orderService: OrderService, private fb: FormBuilder, private customerService: CustomerService) {
     this.orderForm = this.fb.group({
+      customerId: ['', Validators.required],
       itemName: ['', Validators.required],
-      quantity: ['', Validators.required, Validators.min(1)],
-      unitPrice: ['', Validators.required, Validators.min(0.01)],
+      quantity: ['', Validators.required],
+      unitPrice: ['', Validators.required],
     });
   }
 
-  public submit(): void {
-    this.saving = true;
-    const order = this.orderForm.value;
-    order.customerId = this.customer.id;
+  ngOnInit(): void {
+    this.customers$ = this.customerService.getCustomers();
+  }
 
-    this.orderService.createOrder(order)
+  public submit(formDirective: FormGroupDirective): void {
+    this.saving = true;
+
+    this.orderService.createOrder(this.orderForm.value)
       .subscribe(() => {
+        this.orderForm.reset();
+        formDirective.resetForm();
         this.closeEditor.emit();
         this.saving = false;
       });
   }
 
-  public cancel(): void {
+  public cancel(formDirective: FormGroupDirective): void {
+    formDirective.resetForm();
     this.orderForm.reset();
   }
 
