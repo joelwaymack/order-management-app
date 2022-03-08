@@ -8,7 +8,11 @@ import { SettingsService } from 'src/app/services/settings.service';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-  private initialValue: any;
+  private initialValue: {
+    customerApiUrl: '',
+    orderApiUrl: '',
+    appInsightsConnectionString: ''
+  }
 
   settingsForm = this.fb.group({
     customerApiUrl: [''],

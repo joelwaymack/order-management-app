@@ -46,9 +46,9 @@ export class SettingsService {
   }
 
   constructor(private router: Router) {
-    this._customerApiUrl = localStorage.getItem('customerApiUrl');
-    this._orderApiUrl = localStorage.getItem('orderApiUrl');
-    this.appInsightsConnectionString = localStorage.getItem('appInsightsConnectionString');
+    this._customerApiUrl = localStorage.getItem('customerApiUrl') ?? '';
+    this._orderApiUrl = localStorage.getItem('orderApiUrl') ?? '';
+    this._appInsightsConnectionString = localStorage.getItem('appInsightsConnectionString') ?? '';
   }
 
   private setApplicationInsights() {
